@@ -19,4 +19,16 @@ def open_connection(url):
 def start_a_check(id, url):
 	print(f":>> Number{id} started == {url}")
 	open_connection(url)
-	print(f":>> Number{id} is out.")		
+	print(f":>> Number{id} is out.")
+
+
+def execute(url_list):
+	id = 127
+	for url in url_list:
+		t = threading.Thread(open_connection, (id, url))
+		t.start()
+		id += 12
+
+
+if __name__ == "__main__":
+	create()		
