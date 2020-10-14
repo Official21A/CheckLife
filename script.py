@@ -1,5 +1,6 @@
 import requests
 import sys
+import threading
 
 TIMEOUT = 1
 
@@ -13,3 +14,9 @@ def open_connection(url):
 	except:
 		print(":?Program failed, Something is wrong with your system.")	
 		sys.exit(-1)
+
+
+def start_a_check(id, url):
+	print(f":>> Number{id} started == {url}")
+	open_connection(url)
+	print(f":>> Number{id} is out.")		
