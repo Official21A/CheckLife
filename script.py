@@ -3,13 +3,22 @@ import sys
 import threading
 import time
 
-PATH = "DATA"
-TIMEOUT = 1
 
-results = {}
-url_list = []
+# This is a simple program that gets a list
+# of urls, and will check if they are active
+# or not. In case of not being active it will
+# give the result why it is not active.
+# Create by amirhossein Oct 16th 2020
 
 
+PATH = "DATA.sc" # output file
+TIMEOUT = 1 # limit time for sending a request
+
+results = {} # result dic
+url_list = [] # input list
+
+
+# file functions
 def save(value):
 	try:
 		with open(PATH, "a+") as file:
@@ -39,6 +48,7 @@ def update(value):
 		print(e)
 
 
+# connection functions
 def open_connection(url):
 	global results
 	try:
@@ -63,6 +73,7 @@ def execute(url_list):
 		id += 12
 
 
+# program extra functions
 def print_all():
 	global results
 	for key, value in results.items():
@@ -79,6 +90,7 @@ def create():
 	print_all()
 
 
+# consol functions
 def show():
 	global url_list
 	print(url_list)
@@ -93,7 +105,7 @@ def add(value):
 def remove(value):
 	load()
 	update(value)
-	print(f">{value} : Removed")
+	print(f">{value} : Removed")	
 
 
 def run(arvg):
@@ -112,5 +124,6 @@ def run(arvg):
 		print(e)						
 
 
+# program starts
 if __name__ == "__main__":
 	run(sys.argv)		
