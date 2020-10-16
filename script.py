@@ -1,17 +1,21 @@
 import requests
 import sys
 import threading
+import time
 
 TIMEOUT = 1
 
+results = {}
+
+
 def open_connection(url):
+	global results
 	try:
 		response = requests.get(url, timeout=TIMEOUT, allow_redirects=False)
 		response.raise_for_status() 
-		print(f":> Result: URL={response.url} >> ", end="")
-		print(f"{response.status_code} {response.reason}//{response.elapsed}")	
+		results[f"{url}"] = f"{response.status_code} {response.reason}//{response.elapsed}"	
 	except requests.exceptions.RequestException as e:
-		print(f":?Program failed {url}. {e}")
+		results[f"{url}"] = f"{e}"
 
 
 def start_a_check(id, url):
@@ -28,9 +32,19 @@ def execute(url_list):
 		id += 12
 
 
+def print_all():
+	global results
+	for key, value in results.items():
+		print(f"URL={key} :: Result={value}")
+
+
 def create():
 	url_list = ["https://github.com","www.google.com","https://www.upgrad.com"]
 	execute(url_list)
+	while True:
+		if len(results.keys()) == len(url_list):
+			break;
+	print_all()
 
 
 if __name__ == "__main__":
