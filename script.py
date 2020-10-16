@@ -6,6 +6,7 @@ import time
 TIMEOUT = 1
 
 results = {}
+url_list = []
 
 
 def open_connection(url):
@@ -39,6 +40,7 @@ def print_all():
 
 
 def create():
+	global url_list
 	url_list = ["https://github.com","www.google.com","https://www.upgrad.com"]
 	execute(url_list)
 	while True:
@@ -47,5 +49,35 @@ def create():
 	print_all()
 
 
+def show():
+	global url_list
+	print(url_list)
+
+
+def add(value):
+	url_list.append(value)	
+	print(f">{value} : Added.")
+
+
+def remove(value):
+	global url_list
+	print(f">{url_list.pop(value)} : Removed")
+
+
+def run(arvg):
+	try:
+		if len(arvg) == 1:
+			create()
+		elif arvg[1] == "-add":
+			add(arvg[2])	
+		elif arvg[1] == "-rmv":
+			remove(arvg[2])
+		elif arvg[1] == "-viw":
+			show()
+		else:
+			print(">? Error")
+	except (e,):
+		print(e)						
+
 if __name__ == "__main__":
-	create()		
+	run(sys.argv)		
